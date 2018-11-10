@@ -1,0 +1,85 @@
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+
+
+export default class App extends React.Component { 
+  constructor(props){
+    super(props);
+    this.addition = this.addition.bind(this);
+    this.state = {
+      numa: 0,
+      numb: 0,
+      result: '',
+      numAError: '',
+      numBError: ''
+    }
+  }
+  addition(){
+    this.setState({
+      numAError: '',
+      numBError: '',
+      result: ''
+    })
+    if (this.state.numa === "" || this.state.numa.indexOf(',') !== -1 ||  this.state.numa.indexOf('-') !== -1 ||  this.state.numa.indexOf(' ') !== -1 ) {
+      this.setState(() => ({ numAError: 'Enter a valid number'}));
+    }else{
+      var a = Number.parseFloat(this.state.numa);
+    }
+    if (this.state.numb === "" ||  this.state.numa.indexOf(',') !== -1 ||  this.state.numa.indexOf('-') !== -1 ||  this.state.numa.indexOf('-') !== -1) {
+      this.setState(() => ({ numBError: 'Enter a valid number'}));
+    }else{
+      var b = Number.parseFloat(this.state.numb);
+    }
+    
+    
+    if (isNaN(a)) {
+      console.log('kjhunan');
+    }
+    var c = a + b;
+    this.setState({
+      result: c
+    })
+  }
+  render(){
+    return (
+      <View style={styles.container}>
+        <Text>Sum App</Text>
+         <TextInput 
+           style = {{height: 100,width: 200}}
+           keyboardType = 'numeric'
+           placeholder = "Enter 1st number"
+           onChangeText={(numa) => this.setState({numa})}
+         />
+         <Text>{this.state.numAError}</Text>
+         
+         <TextInput 
+           style = {{height: 100,width: 200}}
+           keyboardType = 'numeric'
+           placeholder = "Enter 2nd number"
+           onChangeText={(numb) => this.setState({numb})}
+         />
+         <Text>{this.state.numBError}</Text>
+         
+        <Button title="Add the numbers" onPress={this.addition}/>
+        <View
+  style={{
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+  }}
+/>
+        
+        <Text>{isNaN(this.state.result) ? 'Please enter both numbers': this.state.result}</Text>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'grey',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
